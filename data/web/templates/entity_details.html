@@ -1,0 +1,138 @@
+{% extends "shell.html" %}
+
+{% block title %}Entity: {{ entity }}{% endblock %}
+
+{% block content %}
+
+<div class="row pt-2">
+  <div class="p-3 mb-2 mx-auto bg-secondary text-white rounded text-center" style="width: 100%;">
+    <img src="{{ url_for('static', filename='ramco_logo_white.svg') }}" width="80" alt="RAMCO logo" title="RAMCO logo">
+    &nbsp;This is an example of the API Explorer interface. <a href="{{ url_for('explorer_root') }}" class="alert-link">Click here to return to the main Entity Search Page.</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm">
+    <h6 class="text-primary pt-4"><em>entity</em></h6>
+    <h2 class="text-secondary text-break">{{ entity }}</h2>
+  </div>
+</div>
+
+<div class="row pt-3">
+  <div class="col-sm text-break">
+    Entity Name: <em>{{ entity }}</em>
+    </br>
+    </br>
+
+    {% if details['Data']['Description'] != '' %}
+      Description: <em>{{ details['Data']['Description'] }}</em>
+      </br>
+      </br>
+    {% else %}
+
+    {% endif %}
+
+    PrimaryIdAttribute: <em>{{ details['Data']['PrimaryIdAttribute'] }}</em>
+    </br>
+    </br>
+
+    {% if details['Data']['PrimaryNameAttribute'] != '' %}
+    {% elif details['Data']['PrimaryNameAttribute'] != 'None' %}
+    {% else %}
+      PrimaryNameAttribute: <em>{{ details['Data']['PrimaryNameAttribute'] }}</em>
+      </br>
+      </br>
+    {% endif %}
+  </div>
+</div>
+
+<div class="container m-0 pt-3 p-0">
+  <div class="row">
+    <div class="col-sm">
+
+      <h2 class="text-secondary">Attributes / Fields</h3>
+
+      <table id="attributes" 
+      class="table-hover table-sm table-borderless" 
+      data-toggle="table" 
+      data-pagination="true"
+      data-search="true"
+      data-search-align="left">
+      <thead>
+        <tr>
+          <th class="text-secondary" data-sortable="true">Attribute Name</th>
+        </tr>
+      </thead>
+
+      {% for key, value in details['Data']['Attributes'].items() %}
+
+          <tr>
+            <td><a href="{{ url_for('explorer_attribute', entity=entity, attribute=key)}}" class="text-break">{{value['Name']}}</a></td>
+          </tr>
+
+      {% endfor %}
+      </table>
+    </br></br>
+    </div>
+
+    <div class="col-sm">
+
+      <h2 class="text-secondary">Relationships</h3>
+      
+      <table id="relationships" 
+      class="table-hover table-sm table-borderless" 
+      data-toggle="table" 
+      data-pagination="true"
+      data-search="true"
+      data-search-align="left">
+      <thead>
+        <tr>
+          <th class="text-secondary" data-sortable="true">Relationship Name</th>
+        </tr>
+      </thead>
+
+      {% for key, value in details['Data']['Relationships'].items() %}
+          
+          <tr>
+            <td><a href="{{ url_for('explorer_relationship', entity=entity, relationship=key)}}">{{value['Name']}}</a></td>
+          </tr>
+
+      {% endfor %}
+      </table>
+
+    </div>
+  </div>
+</div>
+
+<!--{# raw data
+<h2 class="text-secondary">Raw Data:</h2>
+{{ details }}
+#}-->
+
+{% endblock %}
+
+
+<!-- javascript to allow in-place list filtering in bootstrap -->
+{% block js %}
+<script>
+$(document).ready(function(){
+  $("#attribute_name").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#attribute_list li").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
+<script>
+$(document).ready(function(){
+  $("#relationship_name").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#relationship_list li").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+{% endblock %}

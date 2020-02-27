@@ -1,0 +1,113 @@
+{% extends "shell.html" %}
+
+{% block title %}Details for {{ entity }}/{{ attribute }}{% endblock %}
+
+{% block content %}
+
+<div class="row pt-2">
+  <div class="p-3 mb-2 mx-auto bg-secondary text-white rounded text-center" style="width: 100%;">
+    <img src="{{ url_for('static', filename='ramco_logo_white.svg') }}" width="80" alt="RAMCO logo" title="RAMCO logo">
+    &nbsp;This is an example of the API Explorer interface. <a href="{{ url_for('explorer_root') }}" class="alert-link">Click here to return to the main Entity Search Page.</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm">
+    <h6 class="text-primary pt-4"><em>attribute</em></h6>
+    <h2 class="text-secondary text-break">{{ entity }} / {{ attribute }}</h2>
+  </div>
+</div>
+
+<div class="row pt-3">
+<div class="col-sm text-break">
+
+Entity: <em><a href="{{ url_for('explorer_entity', entity=entity) }}" data-clipboard-text="{{ entity }}" class={{ entity }}> {{ entity }}</a></em>&nbsp;
+<a href="#" class="badge badge-pill badge-secondary" data-clipboard-target=".{{ entity }}">Copy</a>
+</br>
+</br>
+
+Attribute: <em><a href="{{ url_for('explorer_attribute', attribute=attribute, entity=entity) }}" data-clipboard-text="{{ attribute }}" class={{ attribute }}> {{ attribute }}</a></em>&nbsp;
+<a href="#" class="badge badge-pill badge-secondary" data-clipboard-target=".{{ attribute }}">Copy</a>
+</br>
+</br>
+
+{% for k,v in attribute_details.items() %}
+  
+  {% if k == 'Options' %}
+  
+  <!-- label text -->Type: OptionSet &nbsp;<!-- /label text-->
+  <div class="btn-group dropright">
+    <button class="btn btn-outline-primary dropdown-toggle" 
+            type="button" 
+            id="dropdownMenuButton" 
+            data-toggle="dropdown" 
+            aria-haspopup="true" 
+            aria-expanded="false">
+    
+    <!-- button text -->Options<!-- /button text-->
+    </button>
+
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <h6 class="dropdown-header">Display Name : <em>Database Value</em></h6>
+      {% for k2, v2 in v.items() %}
+        
+        {% if '**' in k2 %}
+          <a class="dropdown-item text-danger" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="** This OptionSet's data is stored as a List in CRM, not as a Dictionary. Values not guranteeed. Consult your RAMCO system.">{{ v2 }} : <em>{{ k2 }}</em></a>
+        
+        {% else %}
+          <a class="dropdown-item ">{{ v2 }} : <em>{{ k2 }}</em></a>
+
+        {% endif %}
+        
+      {% endfor %}
+    </div>
+  </div>
+  
+  </br>
+  </br>
+
+  {% elif k == 'Name' %}
+
+    {{ k }}: <em><a href="{{ url_for('explorer_attribute', attribute=attribute, entity=entity) }}" data-clipboard-text="{{ v }}" class={{ v }}>{{ v }}</em></a>
+    <a href="#" class="badge badge-pill badge-secondary" data-clipboard-target=".{{ v }}">Copy</a>
+  
+  </br>
+  </br>
+
+  {% else %}
+
+    {{ k }}: <em>{{ v }}</em>
+
+    </br>
+    </br>
+
+  {% endif %}
+
+{% endfor %}
+
+</div>
+</div>
+
+<!--{#
+<h2 class="text-secondary">Raw Data:</h2>
+{{ attribute_details }}
+#}-->
+
+{% endblock %}
+
+
+{% block js %}
+<script type="text/javascript" src="{{ url_for('static', filename='jquery.copy-to-clipboard.js')}}"></script>
+
+<script>
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+</script>
+
+<script>
+$(document).ready(function() {
+  $('.element').CopyToClipboard();
+});
+</script>
+{% endblock %}

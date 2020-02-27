@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  
+  <head>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139146230-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-139146230-1');
+    </script>
+
+    <!-- Facebook Pixel Code -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '2607245879531264');
+      fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=2607245879531264&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Facebook Pixel Code -->
+
+    <!-- page title -->
+    <title>{% block title %}default base title{% endblock %}</title>
+
+    <!-- charset, optimized for mobile -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    {% block meta %}<!-- block for any custom META content -->
+    {% endblock %}<!-- end meta block -->
+
+    <!-- bootstrap css - updates 2-5-2020 @ https://www.bootstrapcdn.com -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- custom local bootstrap css -->
+    <link href="{{ url_for('static', filename='bootstrap_mansard.css') }}" rel="stylesheet">
+
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Source+Code+Pro|Source+Serif+Pro&display=swap" rel="stylesheet">
+
+    <!-- fontawesome icons - updated 2-5-2020 @ https://fontawesome.com/kits/b6d4534c1b-->
+    <script src="https://kit.fontawesome.com/b6d4534c1b.js" crossorigin="anonymous"></script>
+
+    {% block css %}<!-- block for any custom CSS content -->
+    {% endblock %}<!-- end css block -->
+
+    {% block head %}<!-- block for any custom HEAD content-->
+    {% endblock %}<!-- end head block -->
+  </head>
+
+  <!-- open bootstrap container using <div class="container">, remove this block if not desired -->
+{% block bootstrap_container_open %}
+  <div class="container">
+{% endblock %}
+
+  <body>
+    <header>
+      <div>
+        {% block header %}
+          <!-- nav/header content goes here -->
+        {% endblock %}
+      </div>
+    </header>
+    <!-- end header block -->
+
+    <main>
+
+      {% block content %}
+        <!-- page main content goes here -->
+      {% endblock %}
+      <!-- end content block -->
+
+    </main>
+
+    {% block footer %}
+    <!-- footer content goes here -->
+    {% endblock %}
+    <!-- end footer block, end visible html content -->
+
+{% block bootstrap_container_close %}
+    <!-- close bootstrap container div, remove if fullscreen desired -->
+  </div>
+{% endblock %}
+
+<!-- add all javascript at end of body for optimized loading -->
+
+<!-- javascript for bootstrap - 2-5-2020 @ https://www.bootstrapcdn.com -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+<!-- javascript for bootstrap jquery & popper - 2-5-2020 @ https://getbootstrap.com -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+<!-- bootstrap-table Latest compiled and minified JavaScript 2-5-2020 @ https://bootstrap-table.com-->
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css">
+<script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
+
+
+{% block js %}
+<!-- additional javascript for specific pages goes here -->
+{% endblock %}
+<!-- end javascript block, end of document -->
+
+<!-- close html document tags -->
+</body>
+</html>

@@ -1,0 +1,63 @@
+{% extends "shell.html" %}
+
+{% block title %}Entity Search{% endblock %}
+
+{% block content %}
+
+<div class="row pt-2">
+  <div class="p-3 mb-2 mx-auto bg-secondary text-white rounded text-center" style="width: 100%;">
+    <img src="{{ url_for('static', filename='ramco_logo_white.svg') }}" width="80" alt="RAMCO logo" title="RAMCO logo">
+    &nbsp;This is an example of the API Explorer interface. <a href="{{ url_for('explorer_root') }}" class="alert-link">Click here to return to the main Entity Search Page.</a>
+  </div>
+</div>
+
+<div class="row pt-4">
+  <div class="col-sm">
+    <p>Start typing to narrow the list below to the entity you'd like to view more information about. You can search on any part of the entity name. Search input is case-insensitive.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm">
+    <table id="entities" 
+      class="table-hover table-sm table-borderless" 
+      data-toggle="table" 
+      data-pagination="true"
+      data-search="true"
+      data-search-align="left">
+      <thead>
+        <tr>
+          <th class="text-secondary" data-sortable="true">Entity Name</th>
+        </tr>
+      </thead>
+
+      {% for key, value in entities['Data'].items() %}
+        <tr>
+          <td><a href="{{ url_for('explorer_entity', entity=value)}}">{{ value }}</a></td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+
+<!--{#
+<h2 class="text-primary">Raw Data:</h2>
+{{ entities }}
+#}-->
+
+{% endblock %}
+
+
+<!-- javascript to allow in-place list filtering in bootstrap -->
+{% block js %}
+<script>
+$(document).ready(function(){
+  $("#entity_name").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#entity_list li").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+{% endblock %}
